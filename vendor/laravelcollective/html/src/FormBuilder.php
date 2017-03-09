@@ -13,6 +13,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 
 class FormBuilder
 {
+
     use Macroable, Componentable {
         Macroable::__call as macroCall;
         Componentable::__call as componentCall;
@@ -209,21 +210,16 @@ class FormBuilder
      * @param  string $name
      * @param  string $value
      * @param  array  $options
-     * @param  bool   $escape_html
      *
      * @return \Illuminate\Support\HtmlString
      */
-    public function label($name, $value = null, $options = [], $escape_html = true)
+    public function label($name, $value = null, $options = [])
     {
         $this->labels[] = $name;
 
         $options = $this->html->attributes($options);
 
-        $value = $this->formatLabel($name, $value);
-
-        if ($escape_html) {
-            $value = $this->html->entities($value);
-        }
+        $value = e($this->formatLabel($name, $value));
 
         return $this->toHtmlString('<label for="' . $name . '"' . $options . '>' . $value . '</label>');
     }
@@ -1084,7 +1080,7 @@ class FormBuilder
             return $value;
         }
 
-        if (! is_null($this->old($name)) && $name != '_method') {
+        if (! is_null($this->old($name))) {
             return $this->old($name);
         }
 
@@ -1107,7 +1103,7 @@ class FormBuilder
     protected function getModelValueAttribute($name)
     {
         if (method_exists($this->model, 'getFormValue')) {
-            return $this->model->getFormValue($this->transformKey($name));
+            return $this->model->getFormValue($name);
         }
 
         return data_get($this->model, $this->transformKey($name));

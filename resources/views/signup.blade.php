@@ -12,10 +12,13 @@
 			</div>
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					<form class="middle_form">
+					{!! Form::open(array('route' => 'users.store', 'class' => 'middle_form')) !!}
+						{!! Form::hidden('user_id', null) !!}
+						{!! Form::hidden('verification_code', null) !!}
+						{!! Form::token() !!}
 						<div class="row">
 							<div class="col-md-6 form-group">
-								<label> Name </label>
+								<label> Name *</label>
 								<input type="text" name="name" class="form-control" required="" placeholder="Tell Your Name">
 							</div>
 							<div class="col-md-6 form-group">
@@ -25,21 +28,21 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-group">
-								<label> Email Address </label>
+								<label> Email Address *</label>
 								<input type="email" name="email" class="form-control" required="" placeholder="Tell Your Email Address">
 							</div>
 							<div class="col-md-6 form-group">
-								<label> Contact Number </label>
+								<label> Contact Number *</label>
 								<input type="tel" name="contact_number" class="form-control" required="" placeholder="How to Reach You">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-group">
-								<label>Password</label>
+								<label>Password *</label>
 								<input type="password" name="password" class="form-control" required="" placeholder="Password">
 							</div>
 							<div class="col-md-6 form-group">
-								<label>Confirm Password</label>
+								<label>Confirm Password *</label>
 								<input type="password" name="confirm_password" class="form-control" required="" placeholder="Confirm Yours">
 							</div>
 						</div>
@@ -49,7 +52,7 @@
 								<button type="submit" class="btn btn-primary fsize16 space10">Register Now</button>
 							</div>
 						</div>
-					</form>
+					{!! Form::close() !!}
 				</div>
 			</div><!-- 
 			<div class="row">
